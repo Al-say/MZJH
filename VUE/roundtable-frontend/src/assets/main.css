@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  /* 深空背景色 */
+  background-color: #050b14;
+  /* 微妙的科幻网格线 */
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.15) 1px, transparent 1px);
+  background-size: 30px 30px;
+  /* 添加一个径向渐变暗角，让视线集中在中心 */
+  background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+  min-height: 100vh;
+  color: #e2e8f0; /* 默认文字变更为浅灰色 */
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; /* 建议使用现代无衬线字体 */
+}
+
+/* 自定义滚动条，适应深色主题 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
