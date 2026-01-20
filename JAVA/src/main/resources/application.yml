@@ -5,6 +5,17 @@ spring:
   application:
     name: roundtable
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/roundtable
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
 logging:
   level:
     org.springframework.web.socket: INFO
