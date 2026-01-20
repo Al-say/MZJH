@@ -1,6 +1,9 @@
 package com.alsay.mzjh.llm;
 
 import com.alsay.mzjh.protocol.RoundtableEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
@@ -10,9 +13,17 @@ import java.util.Map;
 /**
  * Mock implementation of LlmAdapter for testing.
  * Simulates streaming response with delayed chunks.
+ * Only active when roundtable.llm.mode=mock (default).
  */
 @Component
+@ConditionalOnProperty(name = "roundtable.llm.mode", havingValue = "mock", matchIfMissing = true)
 public class MockLlmAdapter implements LlmAdapter {
+
+    private static final Logger log = LoggerFactory.getLogger(MockLlmAdapter.class);
+
+    public MockLlmAdapter() {
+        log.info("MockLlmAdapter 已初始化 (LLM mock 模式)");
+    }
 
     @Override
     public Flux<RoundtableEvent> generateStreaming(String agentId, String prompt, long seqStart) {

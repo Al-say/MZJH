@@ -55,4 +55,16 @@ public class SeatResolver {
         for (String k : keys) ordered.add(map.get(k));
         return ordered;
     }
+
+    /**
+     * 单席位调试模式：解析单个 agentKey 对应的席位
+     */
+    public AgentSeat resolveSingle(ClientMessage msg) {
+        String agentKey = msg.getAgentKey();
+        if (agentKey == null || agentKey.isBlank()) {
+            throw new IllegalArgumentException("agentKey 不能为空");
+        }
+        return seatRepo.findByAgentKeyAndEnabledTrue(agentKey.trim())
+                .orElseThrow(() -> new IllegalArgumentException("席位不存在或未启用: " + agentKey));
+    }
 }

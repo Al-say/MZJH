@@ -43,4 +43,12 @@ public record RoundtableEvent(
     public static RoundtableEvent error(String topicId, String agentId, long seq, Map<String, Object> payload) {
         return new RoundtableEvent(topicId, agentId, EventType.ERROR, seq, null, payload);
     }
+
+    public static RoundtableEvent error(String topicId, String agentId, long seq, String errorCode, String message) {
+        return new RoundtableEvent(topicId, agentId, EventType.ERROR, seq, null, Map.of(
+                "errorCode", errorCode,
+                "message", message,
+                "retryable", true
+        ));
+    }
 }

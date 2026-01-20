@@ -1,6 +1,9 @@
 package com.alsay.mzjh.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +15,8 @@ public class RoundtableTemplate {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NotBlank(message = "Template name cannot be blank")
+    @Size(max = 64, message = "Template name must be less than 64 characters")
     @Column(name = "name", nullable = false, length = 64)
     private String name;
 

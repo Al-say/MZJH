@@ -15,10 +15,18 @@ public class RoundtableController {
 
     @MessageMapping("/startDiscussion")
     public void startDiscussion(ClientMessage clientMessage) {
-        String topic = clientMessage.getTopic();
-        if (topic == null || topic.isBlank()) {
-            return;
+        roundtableService.startDiscussion(clientMessage);
+    }
+
+    @MessageMapping("/startSingleDiscussion")
+    public void startSingleDiscussion(ClientMessage clientMessage) {
+        roundtableService.startSingleDiscussion(clientMessage);
+    }
+
+    @MessageMapping("/cancelDiscussion")
+    public void cancelDiscussion(ClientMessage clientMessage) {
+        if ("CANCEL".equals(clientMessage.getAction()) && clientMessage.getTopicId() != null) {
+            roundtableService.cancelDiscussion(clientMessage);
         }
-        roundtableService.startDiscussion(topic.trim());
     }
 }

@@ -7,24 +7,58 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/roundtable
-    username: postgres
-    password: password
+    username: ${DB_USERNAME:alsay_mac}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
+
+  # Redis 配置（可选）
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  # Spring AI OpenAI 兼容配置 (DeepSeek 使用 OpenAI 兼容接口)
+  ai:
+    openai:
+      api-key: ${MZJH_DEEPSEEK:}
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
 
 logging:
   level:
     org.springframework.web.socket: INFO
     org.springframework.messaging: INFO
+    com.alsay.mzjh: DEBUG
   retry:
     instances:
       llm:
         max-attempts: 3
         wait-duration: 1000
+
+management:
+  health:
+    redis:
+      enabled: false  # Redis 可选，禁用健康检查
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# 圆桌讨论配置
+roundtable:
+  single-seat-enabled: true  # 单席位调试模式开关，生产建议关闭
+  llm:
+    mode: ${ROUNDTABLE_LLM_MODE:mock}  # mock | deepseek
 
 # OpenTelemetry
 opentelemetry:

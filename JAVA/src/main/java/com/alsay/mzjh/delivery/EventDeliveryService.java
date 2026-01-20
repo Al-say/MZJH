@@ -32,9 +32,9 @@ public class EventDeliveryService {
                     boolean isDelta = "delta".equals(parts[1]);
 
                     if (isDelta) {
-                        // Buffer DELTA events for 50ms and merge content
+                        // Buffer DELTA events for 60ms and merge content
                         return group
-                                .bufferTimeout(10, Duration.ofMillis(50))  // Buffer up to 10 events or 50ms
+                                .bufferTimeout(20, Duration.ofMillis(60))  // Buffer up to 20 events or 60ms
                                 .filter(list -> !list.isEmpty())
                                 .map(list -> {
                                     RoundtableEvent first = list.get(0);

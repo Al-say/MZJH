@@ -14,6 +14,8 @@ public interface AgentSeatRepository extends JpaRepository<AgentSeat, String> {
 
     Optional<AgentSeat> findByAgentKey(String agentKey);
 
+    Optional<AgentSeat> findByAgentKeyAndEnabledTrue(String agentKey);
+
     List<AgentSeat> findByEnabledTrue();
 
     @Query("SELECT a FROM AgentSeat a WHERE a.agentKey IN :keys AND a.enabled = true")

@@ -1,18 +1,21 @@
 package com.alsay.mzjh.protocol;
 
+import java.util.Map;
+
 public class ServerMessage {
     private String topicId;
-    private String agentId;
+    private Object agentId; // String for "system", Long for seat IDs
     private String content;
     private boolean isFinish;
 
     // 扩展字段，前端可忽略
-    private String eventType; // START, DELTA, END, ERROR
+    private String eventType; // START, DELTA, SECTION, END, CANCELLED, ERROR, TOPIC_READY
     private long seq;
+    private Map<String, Object> payload; // 可选：结构化摘要、风险、行动项等
 
     public ServerMessage() {}
 
-    public ServerMessage(String topicId, String agentId, String content, boolean isFinish, String eventType, long seq) {
+    public ServerMessage(String topicId, Object agentId, String content, boolean isFinish, String eventType, long seq) {
         this.topicId = topicId;
         this.agentId = agentId;
         this.content = content;
@@ -21,11 +24,21 @@ public class ServerMessage {
         this.seq = seq;
     }
 
+    public ServerMessage(String topicId, Object agentId, String content, boolean isFinish, String eventType, long seq, Map<String, Object> payload) {
+        this.topicId = topicId;
+        this.agentId = agentId;
+        this.content = content;
+        this.isFinish = isFinish;
+        this.eventType = eventType;
+        this.seq = seq;
+        this.payload = payload;
+    }
+
     public String getTopicId() { return topicId; }
     public void setTopicId(String topicId) { this.topicId = topicId; }
 
-    public String getAgentId() { return agentId; }
-    public void setAgentId(String agentId) { this.agentId = agentId; }
+    public Object getAgentId() { return agentId; }
+    public void setAgentId(Object agentId) { this.agentId = agentId; }
 
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
@@ -38,4 +51,7 @@ public class ServerMessage {
 
     public long getSeq() { return seq; }
     public void setSeq(long seq) { this.seq = seq; }
+
+    public Map<String, Object> getPayload() { return payload; }
+    public void setPayload(Map<String, Object> payload) { this.payload = payload; }
 }
