@@ -185,6 +185,7 @@
   },
   "active": "25e8a005a2433de3",
   "lastOpenFiles": [
+    "JAVA/target/classes/com/alsay/mzjh/orchestrator/SeatResolver.class",
     "JAVA/src/main/java/com/alsay/mzjh/orchestrator/SeatResolver.java",
     "JAVA/target/classes/com/alsay/mzjh/repository/RoundtableTemplateRepository.class",
     "JAVA/src/main/java/com/alsay/mzjh/repository/RoundtableTemplateRepository.java",
@@ -195,7 +196,6 @@
     "JAVA/target/classes/com/alsay/mzjh/protocol/ServerMessage.class",
     "JAVA/target/classes/com/alsay/mzjh/protocol/RoundtableEvent$EventType.class",
     "JAVA/target/classes/com/alsay/mzjh/protocol/ClientMessage.class",
-    "JAVA/target/classes/com/alsay/mzjh/protocol/RoundtableEvent.class",
     "VUE/roundtable-frontend/node_modules/lightningcss/README.md",
     "VUE/roundtable-frontend/node_modules/lightningcss-darwin-arm64/README.md",
     "VUE/roundtable-frontend/node_modules/jiti/README.md",
