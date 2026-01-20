@@ -41,14 +41,14 @@
 
 <script setup lang="ts">
 import AgentCard from './AgentCard.vue';
-import type { AgentRuntimeState } from '@/stores/roundtable'
+import type { AgentRuntimeState, AgentSeatDraft } from '@/stores/roundtable'
 
 interface Props {
-  agents: any[]
+  agents: AgentSeatDraft[]
   runtimeStates?: Record<string, AgentRuntimeState>
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 // 计算卡片位置的辅助函数
 const getAgentStyle = (index, total) => {

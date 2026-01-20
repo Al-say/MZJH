@@ -55,6 +55,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoundtableStore } from '@/stores/roundtable'
+import type { AgentSeatDraft } from '@/stores/roundtable'
 import AgentSetupCard from '@/components/AgentSetupCard.vue'
 
 const store = useRoundtableStore()
@@ -70,7 +71,7 @@ const validAgentsCount = computed(() => {
   }).length
 })
 
-const updateAgent = (agentKey: string, updates: any) => {
+const updateAgent = (agentKey: string, updates: Partial<AgentSeatDraft>) => {
   store.updateAgentDraft(agentKey, updates)
   store.validateAgentDraft(agentKey)
 }
