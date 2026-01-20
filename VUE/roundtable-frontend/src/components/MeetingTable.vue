@@ -22,13 +22,16 @@
     </div>
 
     <template v-if="agents.length > 0">
-        <div v-for="(agent, index) in agents" :key="agent.id"
+        <div v-for="(agent, index) in agents" :key="agent.agentKey"
              class="absolute transition-all duration-700 ease-out-cubic"
              :style="getAgentStyle(index, agents.length)">
 
             <div class="transform transition-transform duration-300 hover:scale-105 hover:z-50 hover:rotate-0"
                  :style="{ transform: `rotate(${getRotation(index, agents.length)}deg)` }">
-                 <AgentCard :agent="agent" />
+                 <AgentCard
+                   :agent="agent"
+                   :runtime-state="runtimeStates?.[agent.agentKey]"
+                 />
             </div>
 
         </div>
@@ -36,8 +39,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import AgentCard from './AgentCard.vue';
+import type { AgentRuntimeState } from '@/stores/roundtable'
+
+interface Props {
+  agents: any[]
+  runtimeStates?: Record<string, AgentRuntimeState>
+}
+
+const props = defineProps<Props>()
 
 // 计算卡片位置的辅助函数
 const getAgentStyle = (index, total) => {

@@ -39,7 +39,7 @@
         ref="box"
         class="flex-1 p-4 overflow-y-auto custom-scrollbar relative"
       >
-        <div v-if="agent?.status === 'thinking' && !agent?.content" class="flex items-center gap-2 text-emerald-600 text-xs mt-4 animate-pulse">
+        <div v-if="currentStatus === 'thinking' && !currentContent" class="flex items-center gap-2 text-emerald-600 text-xs mt-4 animate-pulse">
            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -57,31 +57,41 @@
                        prose-code:text-emerald-700 prose-code:bg-emerald-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
                        text-[13px]"
             ></div>
-            <span v-if="agent?.status === 'speaking'" class="inline-block w-2 h-5 bg-emerald-500 ml-1 animate-blink align-sub"></span>
+            <span v-if="currentStatus === 'speaking'" class="inline-block w-2 h-5 bg-emerald-500 ml-1 animate-blink align-sub"></span>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, watch, ref, nextTick } from 'vue';
 import MarkdownIt from 'markdown-it';
 
-const props = defineProps(['agent']);
+const props = defineProps(['agent', 'runtimeState']);
 // 配置 markdown-it 不自动转换换行，由 CSS 控制
 const md = new MarkdownIt({ html: true, breaks: false });
 const box = ref(null);
 
 const renderedMarkdown = computed(() => {
-    if (!props.agent || !props.agent.content) return '';
-    return md.render(props.agent.content);
+    const content = props.runtimeState?.content || props.agent?.content || '';
+    if (!content) return '';
+    return md.render(content);
+});
+
+// 获取当前状态，优先使用runtimeState
+const currentStatus = computed(() => {
+    return props.runtimeState?.status || props.agent?.status || 'idle';
+});
+
+// 获取当前内容
+const currentContent = computed(() => {
+    return props.runtimeState?.content || props.agent?.content || '';
 });
 
 // 动态边框与辉光
 const statusBorderClass = computed(() => {
-    if (!props.agent) return 'border-slate-200';
-    switch (props.agent.status) {
+    switch (currentStatus.value) {
         case 'speaking': return 'border-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.2)]';
         case 'thinking': return 'border-amber-300 shadow-[0_0_10px_rgba(251,191,36,0.15)]';
         case 'error': return 'border-red-300 bg-red-50';
@@ -91,8 +101,7 @@ const statusBorderClass = computed(() => {
 
 // 头像状态光环 (替代文字)
 const statusRingClass = computed(() => {
-    if (!props.agent) return 'bg-slate-200/60 blur-sm';
-    switch (props.agent.status) {
+    switch (currentStatus.value) {
         case 'speaking': return 'bg-emerald-300/60 animate-pulse blur-md';
         case 'thinking': return 'bg-amber-300/50 animate-pulse-slow blur-md';
         case 'error': return 'bg-red-300/60 blur-md';
@@ -101,7 +110,7 @@ const statusRingClass = computed(() => {
 });
 
 // 自动滚动
-watch(() => props.agent?.content, async () => {
+watch(() => currentContent.value, async () => {
     await nextTick();
     if (box.value) {
         // 只有在用户没手动滚上去的时候才自动滚底（体验更好）

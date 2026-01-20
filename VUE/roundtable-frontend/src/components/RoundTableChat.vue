@@ -56,7 +56,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue';
 import MarkdownIt from 'markdown-it';
 import { useRoundtable } from '@/composables/useRoundtable';
