@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ProtocolStudio from '@/views/ProtocolStudio.vue'
 import RoundtableLive from '@/views/RoundtableLive.vue'
 import PyramidDemoView from '@/views/PyramidDemoView.vue'
+import PptWebView from '@/views/PptWebView.vue'
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     path: '/pyramid-demo',
     name: 'PyramidDemo',
     component: PyramidDemoView
+  },
+  {
+    path: '/ppt',
+    name: 'PptWeb',
+    component: PptWebView
   }
 ]
 

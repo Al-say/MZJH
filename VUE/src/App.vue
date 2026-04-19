@@ -1,18 +1,25 @@
 <template>
   <div id="app" class="min-h-screen bg-slate-900 text-white">
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-6 py-4 text-sm text-slate-200">
+        <div class="flex flex-wrap items-center gap-3">
+          <router-link to="/studio" class="rounded-full bg-slate-800 px-4 py-2 transition hover:bg-slate-700">Studio</router-link>
+          <router-link to="/live" class="rounded-full bg-slate-800 px-4 py-2 transition hover:bg-slate-700">Live</router-link>
+          <router-link to="/pyramid-demo" class="rounded-full bg-slate-800 px-4 py-2 transition hover:bg-slate-700">Pyramid Demo</router-link>
+          <router-link to="/ppt" class="rounded-full bg-cyan-600 px-4 py-2 text-white transition hover:bg-cyan-500">PPT Web</router-link>
+        </div>
+        <div class="text-slate-400">AI Roundtable</div>
+      </div>
+    </header>
+
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-// import { useRoundtableStore } from '@/stores/roundtable'
-
-// 初始化全局状态
-// const store = useRoundtableStore()
 
 onMounted(() => {
-  // 可以在这里添加全局初始化逻辑
   console.log('AI Roundtable App initialized')
 })
 </script>
