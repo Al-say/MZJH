@@ -47,6 +47,10 @@
             @toggle-collapse="toggleAgentCollapse"
           />
         </div>
+
+        <div class="mt-8">
+          <PyramidPrincipleDemo />
+        </div>
       </div>
     </div>
   </div>
@@ -57,6 +61,7 @@ import { computed } from 'vue'
 import { useRoundtableStore } from '@/stores/roundtable'
 import type { AgentSeatDraft } from '@/stores/roundtable'
 import AgentSetupCard from '@/components/AgentSetupCard.vue'
+import PyramidPrincipleDemo from '@/components/PyramidPrincipleDemo.vue'
 
 const store = useRoundtableStore()
 

@@ -1,6 +1,7 @@
 export type SessionStatus = 'idle' | 'running' | 'paused' | 'ended'
 export type EventType = 'system' | 'user' | 'agent'
 export type ConnectionStatus = 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED'
+export type EventStatus = 'complete' | 'interrupted'
 
 export interface Session {
   id: string
@@ -51,4 +52,6 @@ export interface EventLog {
   senderId: string
   content: string
   type: EventType
+  status?: EventStatus
+  relatedLogId?: string
 }
